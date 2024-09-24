@@ -1,6 +1,6 @@
 ---
 title: "'Decidere o non decidere?': L'Analisi di Potenza nella Ricerca Psicologica"
-author: "psicostat @ science4all"
+author: "toffa x psicostat @ science4all"
 date: "2024-09-24"
 format: 
   html:
@@ -11,10 +11,6 @@ editor: visual
 ---
 
 ```{r setup, include=FALSE}
-rm(list=ls())
-set.seed(0)
-library(ggplot2)
-library(scales) 
 knitr::opts_chunk$set(warning = FALSE)
 ```
 
@@ -22,15 +18,22 @@ knitr::opts_chunk$set(warning = FALSE)
 
 Quando un fenomeno è molto variabile, **raccogliere abbastanza osservazioni per concludere qualcosa con ragionevole sicurezza è fondamentale**. Pensate anche che in Psicologia osserviamo il comportamento delle persone, non di miscele chimiche. Di rado le persone sono disposte a farsi "osservare" per lunghi periodi, o a rispondere a un gran numero di domande che vorremmo porre loro (senza contare che "sotto osservazione" il loro comportamento potrebbe non essere del tutto spontaneo). Diventa dunque **fondamentale economizzare le risorse: ma *quante* ne servono?**
 
-Le sfide che vi abbiamo proposto giocavano proprio su questo. Bisognava cercare di arrivare a delle conclusioni nonostante l'incertezza, avendo risorse limitate e osservando fenomeni variabili. Se vi è sembrato di **giocare d'azzardo**, be', a volte abbiamo questa impressione anche noi. Ma l'importante è esporsi a un **rischio calcolato**. Il **calcolo a priori** delle risorse (cioè delle osservazioni) necessarie si chiama, a seconda dei casi, **design o power analysis**.
+Le sfide che vi abbiamo posto giocavano proprio su questo. Bisognava cercare di arrivare a delle conclusioni nonostante l'incertezza, avendo risorse limitate e osservando fenomeni variabili. Se vi è sembrato di **giocare d'azzardo**, be', a volte abbiamo questa impressione anche noi. Ma l'importante è esporsi a un **rischio calcolato**. Il **calcolo a priori** delle risorse (cioè delle osservazioni) necessarie si chiama, a seconda dei casi, **design o power analysis**.
 
-Per esemplificare, pensiamo al gioco della moneta. **Dovevamo decidere se la moneta fosse sbilanciata verso "testa" o verso "croce"**. L'esempio è un po' inverosimile perché le monete truccate, nonostante il mito, in realtà non esistono... Ma ci serviva come caso illustrativo. Un'altra semplificazione un po' inverosimile, ma utile per il gioco, era che la moneta fosse certamente sbilanciata verso "testa" *oppure* verso "croce", e mai equa. Questo riduceva le scelte possibili a due sole alternative, semplificando così la spiegazione che daremo.
+Per esemplificare, pensiamo al gioco della moneta. **Dovevamo decidere se la moneta fosse sbilanciata verso "testa" o verso "croce"**. L'esempio è un po' inverosimile perché le monete truccate, nonostante il mito, in realtà non esistono... Ma ci serviva come caso illustrativo. Un'altra semplificazione un po' inverosimile, ma utile per il gioco, era che la moneta fosse certamente sbilanciata verso "testa" *oppure* verso "croce", e mai equa. Questo limitava le scelte possibili a due sole alternative, semplificando così la spiegazione che daremo.
 
 Ovviamente, se una moneta fosse così tanto sbilanciata da dare sempre "testa" o sempre "croce", ce ne accorgeremmo quasi subito. L'incertezza, invece, rimane perché otteniamo un mix di risultati. Ma così è anche **il comportamento delle persone: non è *deterministico* ma *probabilistico*,** rendendo più difficile cogliere le regolarità. Tecnicamente, la "forza" di una certa regolarità nel comportamento si chiama *dimensione dell'effetto* (o *effect size*). Più forte è questa regolarità, più facilmente arriveremo a coglierla. **Le dimensioni degli effetti in Psicologia sono quasi sempre piccole**, purtroppo... *o per fortuna! (pensate a un mondo in cui il nostro comportamento fosse rigidamente e fortemente determinato da pochi fattori ben precisi! non sarebbe un bel mondo...)*
 
-**Per calcolare il numero di osservazioni necessarie per trarre una conclusione con ragionevole sicurezza dobbiamo ipotizzare una certa dimensione dell'effetto.** Noi abbiamo ipotizzato uno sbilanciamento verso "testa" oppure "croce" del *"60% vs 40%"*. Se fosse stato *"90% vs 10%"* il gioco sarebbe stato ben più facile... ma meno divertente, e poi in Psicologia sappiamo che non è mai così "facile"! Il calcolo di quante osservazioni siano necessarie può essere fatto spesso con delle formule. In casi più complessi si può **simulare il fenomeno**: un po' per esemplificare, un po' perché ci diverte, ora abbiamo simulato, anche se avremmo potuto usare le formule. Guardate la seguente figura e poi leggete la spiegazione sotto.
+**Per sapere quante osservazioni ci serviranno prima di trarre una conclusione abbastanza sicura dobbiamo ipotizzare una certa dimensione dell'effetto. Questa ipotesi, ovviamente, potrebbe rivelarsi sbagliata, ma intanto ci serve come guida.** Noi abbiamo ipotizzato uno sbilanciamento verso "testa" (anziché "croce") del *"60% vs 40%"*. Se fosse stato *"90% vs 10%"* il gioco sarebbe stato più facile... ma anche meno divertente, e poi in Psicologia sappiamo che non è mai davvero così "facile"! Dunque, *"60% vs 40%"* è un'ipotesi-guida "plausibile" per un fenomeno che ci aspettiamo essere molto variabile. A questo punto, il calcolo di quante osservazioni siano necessarie può essere fatto con delle formule. In casi più complessi si può **simulare il fenomeno**: un po' per esemplificare, un po' perché ci diverte, ora abbiamo simulato (anche se avremmo potuto usare le formule). 
+
+Guardate la seguente figura e poi leggete la spiegazione sotto:
 
 ```{r cache=T}
+rm(list=ls())
+set.seed(0)
+library(ggplot2)
+library(scales) 
+
 niter = 1e4
 prob = 0.60
 lanci = seq(1,25,2)
@@ -71,13 +74,13 @@ ggplot()+
   xlab("Numero di lanci")
 ```
 
-La figura riassume cosa succede se **si ripete il "gioco della moneta" migliaia di volte**, con numeri di lanci da 1 a 25. Naturalmente non abbiamo passato delle giornate a giocarci: abbiamo lasciato che il computer lo facesse: simulando, appunto, e risolvendo il tutto in pochi secondi ;-)
+La figura riassume cosa succede se **si ripete il "gioco della moneta" migliaia di volte**, con numeri di lanci da 1 a 25. Naturalmente non abbiamo passato delle giornate a giocarci: abbiamo lasciato che lo facesse il computer: simulando, appunto, e risolvendo il tutto in pochi secondi ;-)
 
-La linea verde sul 60% rappresenta la "verità" (*ground truth*) ipotetica: **nell'ipotesi, la moneta è sbilanciata al 60% su "testa"**. La linea tratteggiata sul 40% rappresenta l'ipotesi contraria, cioè che la moneta fosse invece sbilanciata verso "croce". I puntini neri rappresentano i vari risultati ottenuti dopo ciascuna ripetizione del gioco: **con un solo lancio otteniamo "testa" al 100% oppure allo 0%, ma ovviamente non possiamo concludere nulla; con 15 lanci, otteniamo "testa" molto probabilmente tra il 40% e l'80% delle volte; con 25 lanci otteniamo "testa" molto probabilmente tra il 50% e il 70% delle volte, dandoci già una ragionevole garanzia che la moneta sia davvero sbilanciata verso "testa"** e non verso "croce". Le bande verdine attorno alla linea verde scuro si chiamano "bande di confidenza", e rappresentano la quantità di incertezza che rimane attorno a un certo risultato dopo aver fatto un certo numero di lanci (qui abbiamo rappresentato quelle all'80% e al 95%): **più lanci facciamo, minore diventa l'incertezza, ma anche più risorse abbiamo consumato**.
+La linea verde rappresenta la "verità" (*ground truth*) ipotetica: **nell'ipotesi, la moneta è sbilanciata al 60% su "testa"**. La linea tratteggiata sul 40% rappresenta l'ipotesi contraria, cioè che la moneta fosse invece sbilanciata verso "croce". I puntini neri rappresentano i vari risultati ottenuti dopo ciascuna ripetizione del gioco: **con un solo lancio otterremo "testa" al 100% *oppure* allo 0%, ma ovviamente non possiamo concludere nulla; con 15 lanci, otterremo "testa" molto probabilmente il 40-80% delle volte; con 25 lanci otterremo "testa" molto probabilmente il 50-70% delle volte, dandoci già una ragionevole garanzia che la moneta sia davvero sbilanciata verso "testa"** e non verso "croce". Le bande verdine attorno alla linea verde scuro si chiamano "bande di confidenza", e rappresentano la quantità di incertezza che rimane attorno a un certo risultato dopo aver fatto un certo numero di lanci (qui abbiamo rappresentato quelle all'80% e al 95%): **più lanci facciamo, minore diventa l'incertezza, ma anche più risorse abbiamo consumato**.
 
-Cosa ci insegna la figura sopra? In breve: che **se facciamo un'ipotesi non abbiamo ancora osservato niente di *reale*... ma possiamo almeno farci un'idea di quanta incertezza avremo dopo aver raccolto un dato numero di osservazioni...** e magari decidere che *il gioco non vale la candela* e che la ricerca non la condurremo affatto, perché ci costerebbe troppe risorse per lasciarci comunque troppo incerti.
+**Cosa ci insegna la figura sopra? In breve: che se facciamo un'ipotesi non abbiamo ancora osservato niente di *reale*... ma possiamo già farci un'idea di quanta incertezza avremo dopo aver raccolto un dato numero di osservazioni...** e magari decidere che *il gioco non vale la candela*, che la ricerca non la condurremo affatto, perché ci costerebbe troppe risorse per lasciarci comunque troppo incerti.
 
-Ora guardate la figura sotto.
+Ora guardate la figura sotto:
 
 ```{r cache=T}
 #| fig-width: 10
@@ -99,9 +102,9 @@ ggplot(data=estimates2)+
   xlab("Numero di lanci")
 ```
 
-La figura mostra la "speranza" di vincere al gioco della moneta affidandosi alla maggioranza dei risultati dei lanci. **Nel gioco, come nella realtà, e anche in ricerca, alla fine dobbiamo prendere decisioni**. Nel gioco della moneta come si decideva? A un certo punto si guardava se fossero uscite una maggioranza di "testa" o di "croce", e ci si affidava a quello.
+La figura mostra la "speranza" di vincere al gioco della moneta affidandosi alla maggioranza dei risultati dei lanci. **Nel gioco, come nella vita quotidiana, e spesso anche nella ricerca, alla fine dobbiamo prendere decisioni**. Nel gioco della moneta come si decideva? A un certo punto si guardava se fossero uscite più "teste" o più "croci", e ci si affidava a quello.
 
-La figura sopra mostra quale sia la "speranza" di indovinare la verità dopo un certo numero di lanci. Stando alla nostra ipotesi, dopo un solo lancio la "speranza" di indovinare sarebbe del 60% (se esce "testa" dico "testa", altrimenti "croce"). Ma **dopo 25 lanci questa "speranza" a quanto è salita? A circa l'85%. Come vedete, non è ancora una certezza!**
+La figura sopra mostra quale sia la "speranza" di indovinare la verità dopo un certo numero di lanci. Stando alla nostra ipotesi, dopo un singolo lancio la "speranza" di indovinare sarebbe solo del 60% (cioè: se esce "testa" dico "testa", altrimenti dico "croce"). Ma **dopo 25 lanci questa "speranza" a quanto è salita? A circa l'85%. Bene! Ma come vedete, non è ancora una certezza.**
 
 Prima di andarvene, guardate ancora quest'ultima figura (e la spiegazione sotto):
 
@@ -138,4 +141,6 @@ ggplot(data=estimates2)+
   xlab("Numero di lanci")
 ```
 
-Cos'è cambiato in questa figura? Rispetto a prima, abbiamo aggiunto anche i numeri di lanci "pari". Con quale risultato? Che coi lanci "pari" si può osservare un "pareggio" tra "teste" e "croci", lasciandoci così complemente incerti e senza elementi per sbilanciarci. È un problema? Sì e no. Senza entrare in discussioni troppo complesse, e con grossolana approssimazione, questo voleva esemplificare il fatto che, **a volte, in ricerca ci troviamo in condizioni di tale incertezza da non poter proprio decidere niente, ma anche questa incertezza può essere, per così dire, prevista fin dall'inizio... Tenete conto che in tutto questo *racconto* nessuna moneta è stata effettivamente lanciata, ma abbiamo comunque imparato parecchie cose :-)**
+Cos'è cambiato in questa figura? Rispetto a prima, abbiamo aggiunto anche i numeri di lanci "pari". Coi lanci "pari" potrebbe avvenire un "pareggio" tra "teste" e "croci", lasciandoci così completamente incerti e senza elementi per sbilanciarci in una decisione. È un problema? Sì e no. Senza entrare in discussioni troppo complesse, e con grossolana approssimazione, questo voleva esemplificare il fatto che, **a volte, in ricerca ci troviamo in condizioni di tale incertezza da non poter proprio decidere niente, ma anche questa incertezza può essere, per così dire, prevista fin dall'inizio...**
+
+**Tenete conto che in tutto questo *racconto* nessuna moneta è stata effettivamente lanciata, ma abbiamo comunque imparato alcune cose :-)**
