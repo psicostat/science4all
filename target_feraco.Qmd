@@ -1,0 +1,346 @@
+---
+title: "'Valido e attendibile? Comprendere le proprietà di un test psicologico facendo bersaglio"
+author: "tommi x psicostat @ science4all"
+date: "2024-09-24"
+format: 
+  html:
+    toc: true      # Add table of contents
+    toc-depth: 2   # Depth of table of contents
+    code-fold: true # Allows code folding
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE)
+```
+
+Il gioco a cui abbiamo appena giocato sembra un semplice gioco, ma illustra una cosa difficile che proviamo a fare in ricerca. **In psicologia studiamo cose che non si osservano direttamente** **ma solo di riflesso**: misurare la personalità o un'abilità mentale non è come misurare la temperatura dell'acqua o l'altezza di un albero. Le risposte delle persone sono un riflesso di quello che hanno dentro, non direttamente quello che hanno dentro. Poiché le persone si stuferebbero a dare migliaia di risposte, dobbiamo economizzare le domande. Di qui si pone il problema di "misurare il pensiero" abbastanza precisamente anche raccogliendo poche risposte... e che siano però le risposte alle domande giuste.
+
+Come tu stavi cercando di stimare il bersaglio nascosto e invisibile ai tuoi occhi, ma ben presente nella testa di chi ha deciso il bersaglio, allo stesso modo noi psicologi cerchiamo di stimare dei punteggi verosimili per ogni persona rispetto a qualche caratteristica che conosciamo ma non possiamo vedere. In che modo? Esattamente come hai appena fatto tu! Osserviamo dei comportamenti o delle risposte a test e questionari e cerchiamo di coglierne una regolarità...un **qualcosa verso cui tutti questi comportamenti tendono.**
+
+Nel gioco che hai appena svolto, anche tu osservavi qualcosa: i lanci. **Ogni lancio ti dava un'informazione ben precisa** e grazie a queste siamo riusciti a scoprire cosa si nascondeva nella testa di un'altra persona, ma non sempre. Alcune volte i tiri erano così diversi, sparpagliati e inaffidabili che hai dovuto tirare a caso, magari sbagliando e perdendo.
+
+Vediamo un po' quali alternative hai potuto incontrare.
+
+## La situazione perfetta: Valido e attendibile
+
+In alcuni casi siamo molto fortunati. I lanci che abbiamo ottenuto sono particolarmente buoni e indicativi, anche se non perfetti (se fossero perfetti ne basterebbe uno, ma non è mai il caso in psicologia). Cosa possiamo vedere dalla figura qui sotto? I lanci sono ben distribuiti attorno all'obiettivo reale a noi invisibile direttamente. Verrà quindi facile individuarlo, infatti i lanci sono sia validi, quindi colgono ciò che stiamo cercando di individuare, sia attendibili, quindi precisi, poco variabili!
+
+```{r cache=T, message=F}
+rm(list=ls())
+library(circlize)
+
+fcts <- 1:20
+
+# Graphical parameters
+circos.par("gap.degree" = 0, "cell.padding" = c(0, 0, 0, 0),
+           start.degree = 360/40, track.margin = c(0, 0), "clock.wise" = FALSE)
+
+# Create the circle
+circos.initialize(factors = fcts, xlim = c(0, 1))
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts, bg.col = "black",
+                       track.height = 0.15)
+
+# Adding the numbers
+circos.trackText(rep(0.5, 20), rep(0.5, 20),  rep(0.5, 20),
+                 labels = c(13, 4, 18, 1, 20, 5, 12, 9, 14, 11, 8, 16, 7, 19, 3, 17, 2, 15, 10, 6),
+                 factors = fcts, col = "#EEEEEE", font = 2,
+                 facing = "downward")
+
+# Double point
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts,
+                       bg.col = rep(c("#df2623", "#11a551"), 10), bg.border = "#EEEEEE", 
+                       track.height = 0.05)
+
+# Region between double and triple point
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts,
+                       bg.col = rep(c("black", "#e6cda5"), 10), bg.border = "#EEEEEE", 
+                       track.height = 0.275)
+
+# Triple point
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts,
+                       bg.col = rep(c("#df2623", "#11a551"), 10), bg.border = "#EEEEEE",
+                       track.height = 0.05)
+
+# Region between triple point and bullseye
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts, 
+                       bg.col = rep(c("black", "#e6cda5"), 10), bg.border = "#EEEEEE",
+                       track.height = 0.375)
+
+# 25 points
+draw.sector(center = c(0, 0), start.degree = 0, end.degree = 360,
+            rou1 = 0.1, col = "#11a551", border = "#EEEEEE")
+
+# 50 points
+draw.sector(center = c(0, 0), start.degree = 0, end.degree = 360,
+            rou1 = 0.05, col = "#df2623", border = "#EEEEEE")
+
+# ADD DARTS
+ReliableValidX = c(8, 9, 10.3, 11.7)
+ReliableValidY = c(0.2,1,1,0)
+
+circos.points(x = ReliableValidX, y = ReliableValidY, cex = 3, col = "yellow", pch = 16)
+circos.points(x = 9.5, y = 0.6, cex = 3, col = "red", pch = 16)
+
+# Clear data
+circos.clear()
+```
+
+## Una situazione decente: Valido ma inattendibile
+
+Guarda ora questa figura. Come sono distribuiti i punti gialli questa volta? Sono un po' sparsi, ma volendo riusciamo a vederci un obiettivo comune, qualcosa a cui tendono e che potrebbe trovarsi più o meno al centro di tutti i tiri. Ecco, nonostante nessuno dei tiri sia attendibile, mettendoli insieme riusciamo a trovare un punto sufficientemente preciso verso cui sembrano tendere ed ecco che, con un po' di incertezza, riusciamo a scoprire cosa c'è nella testa del lanciatore!
+
+```{r cache=T, message=F}
+rm(list=ls())
+
+fcts <- 1:20
+
+# Graphical parameters
+circos.par("gap.degree" = 0, "cell.padding" = c(0, 0, 0, 0),
+           start.degree = 360/40, track.margin = c(0, 0), "clock.wise" = FALSE)
+
+# Create the circle
+circos.initialize(factors = fcts, xlim = c(0, 1))
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts, bg.col = "black",
+                       track.height = 0.15)
+
+# Adding the numbers
+circos.trackText(rep(0.5, 20), rep(0.5, 20),  rep(0.5, 20),
+                 labels = c(13, 4, 18, 1, 20, 5, 12, 9, 14, 11, 8, 16, 7, 19, 3, 17, 2, 15, 10, 6),
+                 factors = fcts, col = "#EEEEEE", font = 2,
+                 facing = "downward")
+
+# Double point
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts,
+                       bg.col = rep(c("#df2623", "#11a551"), 10), bg.border = "#EEEEEE", 
+                       track.height = 0.05)
+
+# Region between double and triple point
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts,
+                       bg.col = rep(c("black", "#e6cda5"), 10), bg.border = "#EEEEEE", 
+                       track.height = 0.275)
+
+# Triple point
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts,
+                       bg.col = rep(c("#df2623", "#11a551"), 10), bg.border = "#EEEEEE",
+                       track.height = 0.05)
+
+# Region between triple point and bullseye
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts, 
+                       bg.col = rep(c("black", "#e6cda5"), 10), bg.border = "#EEEEEE",
+                       track.height = 0.375)
+
+# 25 points
+draw.sector(center = c(0, 0), start.degree = 0, end.degree = 360,
+            rou1 = 0.1, col = "#11a551", border = "#EEEEEE")
+
+# 50 points
+draw.sector(center = c(0, 0), start.degree = 0, end.degree = 360,
+            rou1 = 0.05, col = "#df2623", border = "#EEEEEE")
+
+# ADD DARTS
+UnReliableValidX = c(5, 9, 11.2, 15)
+UnReliableValidY = c(0.8,1.7,1.9,1)
+
+circos.points(x = UnReliableValidX, y = UnReliableValidY, cex = 3, col = "yellow", pch = 16)
+circos.points(x = 9.5, y = 0.6, cex = 3, col = "red", pch = 16)
+
+# Clear data
+circos.clear()
+```
+
+## Una pessima situazione: invalido e inattendibile
+
+Ma dove le ha tirate 'ste palline? A volte non si capisce niente, sembra che le palline (o le risposte ai nostri questionari) vadano completamente a caso, come se non avessero niente in comune. Cosa possiamo dire in questo caso? Beh, niente, concluderemo che lo strumento non funziona o che i lanci non sono informativi. Abbandoniamo la sfida e ricominciamo, magari cambiando le domande e cercandone di più informative, magari cambiando tiratore!
+
+```{r cache=T, message=F}
+rm(list=ls())
+library(circlize)
+
+fcts <- 1:20
+
+# Graphical parameters
+circos.par("gap.degree" = 0, "cell.padding" = c(0, 0, 0, 0),
+           start.degree = 360/40, track.margin = c(0, 0), "clock.wise" = FALSE)
+
+# Create the circle
+circos.initialize(factors = fcts, xlim = c(0, 1))
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts, bg.col = "black",
+                       track.height = 0.15)
+
+# Adding the numbers
+circos.trackText(rep(0.5, 20), rep(0.5, 20),  rep(0.5, 20),
+                 labels = c(13, 4, 18, 1, 20, 5, 12, 9, 14, 11, 8, 16, 7, 19, 3, 17, 2, 15, 10, 6),
+                 factors = fcts, col = "#EEEEEE", font = 2,
+                 facing = "downward")
+
+# Double point
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts,
+                       bg.col = rep(c("#df2623", "#11a551"), 10), bg.border = "#EEEEEE", 
+                       track.height = 0.05)
+
+# Region between double and triple point
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts,
+                       bg.col = rep(c("black", "#e6cda5"), 10), bg.border = "#EEEEEE", 
+                       track.height = 0.275)
+
+# Triple point
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts,
+                       bg.col = rep(c("#df2623", "#11a551"), 10), bg.border = "#EEEEEE",
+                       track.height = 0.05)
+
+# Region between triple point and bullseye
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts, 
+                       bg.col = rep(c("black", "#e6cda5"), 10), bg.border = "#EEEEEE",
+                       track.height = 0.375)
+
+# 25 points
+draw.sector(center = c(0, 0), start.degree = 0, end.degree = 360,
+            rou1 = 0.1, col = "#11a551", border = "#EEEEEE")
+
+# 50 points
+draw.sector(center = c(0, 0), start.degree = 0, end.degree = 360,
+            rou1 = 0.05, col = "#df2623", border = "#EEEEEE")
+
+# ADD DARTS
+UnReliableUnValidX = c(1, 6, 13, 17)
+UnReliableUnValidY = c(1.7,1.9,1.4,2.2)
+
+circos.points(x = UnReliableUnValidX, y = UnReliableUnValidY, cex = 3, col = "yellow", pch = 16)
+circos.points(x = 9.5, y = 0.6, cex = 3, col = "red", pch = 16)
+
+# Clear data
+circos.clear()
+```
+
+## Ancora peggio! Attendibile ma invalido
+
+Pensavi non potesse andare peggio di così? E invece sì, a volte le palline, magari per caso, finiscono tutte vicine una all'altra e allora siamo felicissimi: indovinare l'obiettivo sarà facile come bere un bicchier d'acqua! Eppure il bersaglio era da tutt'altra parte...volevamo misurare le pere e ci siamo trovati con un sacco di mele! Questa situazione è critica in psicologia quando nessuno può dirci se l'obiettivo che pensiamo di aver centrato sia davvero quello che volevamo centrare. **Prendere per buoni dei risultati completamente sbagliati può portarci ad affermare cose che non stanno nè in cielo nè in terra e a essere certi di quello che stiamo dicendo**...speriamo che un giorno qualcuno se ne accorga e venga a correggerci!
+
+```{r warning=F, message=F}
+rm(list=ls())
+library(circlize)
+
+fcts <- 1:20
+
+# Graphical parameters
+circos.par("gap.degree" = 0, "cell.padding" = c(0, 0, 0, 0),
+           start.degree = 360/40, track.margin = c(0, 0), "clock.wise" = FALSE)
+
+# Create the circle
+circos.initialize(factors = fcts, xlim = c(0, 1))
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts, bg.col = "black",
+                       track.height = 0.15)
+
+# Adding the numbers
+circos.trackText(rep(0.5, 20), rep(0.5, 20),  rep(0.5, 20),
+                 labels = c(13, 4, 18, 1, 20, 5, 12, 9, 14, 11, 8, 16, 7, 19, 3, 17, 2, 15, 10, 6),
+                 factors = fcts, col = "#EEEEEE", font = 2,
+                 facing = "downward")
+
+# Double point
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts,
+                       bg.col = rep(c("#df2623", "#11a551"), 10), bg.border = "#EEEEEE", 
+                       track.height = 0.05)
+
+# Region between double and triple point
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts,
+                       bg.col = rep(c("black", "#e6cda5"), 10), bg.border = "#EEEEEE", 
+                       track.height = 0.275)
+
+# Triple point
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts,
+                       bg.col = rep(c("#df2623", "#11a551"), 10), bg.border = "#EEEEEE",
+                       track.height = 0.05)
+
+# Region between triple point and bullseye
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts, 
+                       bg.col = rep(c("black", "#e6cda5"), 10), bg.border = "#EEEEEE",
+                       track.height = 0.375)
+
+# 25 points
+draw.sector(center = c(0, 0), start.degree = 0, end.degree = 360,
+            rou1 = 0.1, col = "#11a551", border = "#EEEEEE")
+
+# 50 points
+draw.sector(center = c(0, 0), start.degree = 0, end.degree = 360,
+            rou1 = 0.05, col = "#df2623", border = "#EEEEEE")
+
+# ADD DARTS
+ReliableUnValidX = c(17, 16.6, 18, 17.42)
+ReliableUnValidY = c(1.5,1,1.4,1.02)
+
+circos.points(x = ReliableUnValidX, y = ReliableUnValidY, cex = 3, col = "yellow", pch = 16)
+circos.points(x = 9.5, y = 0.6, cex = 3, col = "red", pch = 16)
+
+# Clear data
+circos.clear()
+```
+
+## Un caso particolare
+
+Ci sarebbero altri casi particolari da vedere insieme, ma vediamone almeno uno a cui spesso non viene data troppa importanza: dei lanci troppo simili. Guarda l'immagine qui sotto. Due lanci sono praticamente sovrapposti. Sarà un caso? Di solito tendiamo a pensare che non lo sia: se una persona lancia due volte la pallina nello stesso punto del bersaglio, allora starà mirando proprio lì e gli altri due lanci saranno un errore. Tenderemo così a spostare il nostro obiettivo più verso quei lanci che verso gli altri, a dare più importanza a quei due tiri che agli altri. Così facendo però rischiamo di sbagliare!
+
+Pensa se la prof di matematica chiedesse di risolvere due esercizi molto simili e due molto diversi. Il tuo voto dipenderà molto di più dal conoscere quel tipo di esercizio che dalla tua generale preparazione...sarebbe giusto? Se fosse proprio l'argomento che non hai studiato non crediamo ne saresti contento ;)
+
+```{r warning=F, message=F}
+rm(list=ls())
+library(circlize)
+
+fcts <- 1:20
+
+# Graphical parameters
+circos.par("gap.degree" = 0, "cell.padding" = c(0, 0, 0, 0),
+           start.degree = 360/40, track.margin = c(0, 0), "clock.wise" = FALSE)
+
+# Create the circle
+circos.initialize(factors = fcts, xlim = c(0, 1))
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts, bg.col = "black",
+                       track.height = 0.15)
+
+# Adding the numbers
+circos.trackText(rep(0.5, 20), rep(0.5, 20),  rep(0.5, 20),
+                 labels = c(13, 4, 18, 1, 20, 5, 12, 9, 14, 11, 8, 16, 7, 19, 3, 17, 2, 15, 10, 6),
+                 factors = fcts, col = "#EEEEEE", font = 2,
+                 facing = "downward")
+
+# Double point
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts,
+                       bg.col = rep(c("#df2623", "#11a551"), 10), bg.border = "#EEEEEE", 
+                       track.height = 0.05)
+
+# Region between double and triple point
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts,
+                       bg.col = rep(c("black", "#e6cda5"), 10), bg.border = "#EEEEEE", 
+                       track.height = 0.275)
+
+# Triple point
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts,
+                       bg.col = rep(c("#df2623", "#11a551"), 10), bg.border = "#EEEEEE",
+                       track.height = 0.05)
+
+# Region between triple point and bullseye
+circos.trackPlotRegion(ylim = c(0, 1), factors = fcts, 
+                       bg.col = rep(c("black", "#e6cda5"), 10), bg.border = "#EEEEEE",
+                       track.height = 0.375)
+
+# 25 points
+draw.sector(center = c(0, 0), start.degree = 0, end.degree = 360,
+            rou1 = 0.1, col = "#11a551", border = "#EEEEEE")
+
+# 50 points
+draw.sector(center = c(0, 0), start.degree = 0, end.degree = 360,
+            rou1 = 0.05, col = "#df2623", border = "#EEEEEE")
+
+# ADD DARTS
+corrResX = c(5, 9, 15, 15.3)
+corrResY = c(0.8,1.7,1,1.3)
+
+circos.points(x = corrResX, y = corrResY, cex = 3, col = "yellow", pch = 16)
+circos.points(x = 9.5, y = 0.6, cex = 3, col = "red", pch = 16)
+
+# Clear data
+circos.clear()
+```
+
+**Come hai visto, misurare qualcosa in psicologia non è così facile, ci sono mille insidie nascoste dietro ogni angolo e il ricercatore deve valutare attentamente la validità e l'attendibilità dei suoi strumenti. Per fortuna negli anni sono stati sviluppati innumerevoli metodi statistici e qualitativi che ci permettono di ridurre l'incertezza delle nostre misure.**
