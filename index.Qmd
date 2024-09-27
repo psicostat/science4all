@@ -1,5 +1,5 @@
 ---
-title: "Science4All - Centra il Bersaglio, tra Misurazione, Probabilità e Incertezza"
+title: "science4all - Centra il Bersaglio: tra Misurazione, Probabilità e Incertezza"
 author: "PSICOSTAT"
 date: "2024-09-28"
 format: 
@@ -8,12 +8,23 @@ format:
     toc-depth: 2   # Depth of table of contents
     code-fold: true # Allows code folding
 editor: visual
+include-before:
+  - "<img src='Figures/psicostat_logo.png' style='width:85px; height:auto; display:block;margin:0 auto 30px;' alt='Logo'>"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(warning = FALSE)
 ```
 
-- [‘Decidere o non decidere?’: L’Analisi di Potenza nella Ricerca Psicologica](xx)
-- [Colpire il Pensiero con le Domande Giuste](xx)
-- ['Valido e attendibile? Comprendere le proprietà di un test psicologico facendo bersaglio](xx)
+\
+
+##### [‘Decidere o non decidere?’: L’Analisi di Potenza nella Ricerca Psicologica](https://psicostat.github.io/science4all/power_toffa.html){target="_blank"}
+
+\
+
+##### [Colpire il Pensiero con le Domande Giuste](https://psicostat.github.io/science4all/hit_the_target_psicostat){target="_blank"}
+
+\
+
+##### ['Valido e attendibile? Comprendere le proprietà di un test psicologico facendo bersaglio](https://psicostat.github.io/science4all/target_feraco.html){target="_blank"}
+
