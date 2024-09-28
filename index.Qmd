@@ -18,7 +18,7 @@ knitr::opts_chunk$set(warning = FALSE)
 
 \
 
-##### [‘Decidere o non decidere?’: L’Analisi di Potenza nella Ricerca Psicologica](https://psicostat.github.io/science4all/power_toffa.html){target="_blank"}
+##### [‘Decidere o non decidere?’: L’Analisi di Potenza nella Ricerca Psicologica](https://psicostat.github.io/science4all/power_toffa.html){target="_blank"} (per giocare alla webapp [clicca **qui** ](https://feracot.shinyapps.io/shiny/){target="_blank"})
 
 \
 
